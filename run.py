@@ -85,6 +85,9 @@ def make_guess(board):
     row_guess = input("Enter a row:/n")
 
     col_guess = input("Enter a column:/n")
+    user_guess = (row_guess, col_guess)
+
+    cpu_guess = (random_point(size), random_point(size))
 
 
 
