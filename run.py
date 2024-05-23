@@ -10,7 +10,7 @@ class Game:
     """
     def __init__(self, size, ship_num, name, type):
         self.size = size
-        self.board = []
+        self.board = [["." for x in range(size)] for y in range(size)]
         self.ship_num = ship_num
         self.name = name
         self.type = type
@@ -42,7 +42,8 @@ class Game:
 
 def random_point(size):
     """
-    Returns a random integer between 0 and size
+    Returns a random integer between 0 and size.
+    This will be used for the computers guesses.
     """
     return randint(0, size -1)
 
@@ -52,9 +53,21 @@ def valid_coordinates(x, y, board):
     Ensure coorindate is an actual location on the board, 
     also has not already been selected by user.
     """
-    
-    if  0 > (x or y) > 4:
+    #Checks if coordinate is within boundaries of the board
+    if not (0 <= x < self.size and 0 <= y < self.size):
         print("Value must be between 0 and 4")
+        return False
+    
+    #Checks if the coordinate has already been selected and added to the guesses 
+    if (x, y) in self.guesses:
+        print("Coordinate has already been selected, please choose another")
+        return False
+    
+    #In this game format ships only take one hit to sink,
+    #previous coordinates cannot be valid
+    #Check if spot is already occupied by another ship
+    return (x, y) not in self.ships
+    
 
 
 def populate_board(board):
@@ -77,8 +90,8 @@ def new_game():
     scores["computer"] = 0
     scores["player"] = 0
 
-    computer_board = Board(size, ship_num, "Computer", type="computer")
-    player_board = Board(size, ship_num, player_name, type="player")
+    computer_board = Game(size, ship_num, "Computer", type="computer")
+    player_board = Game(size, ship_num, player_name, type="player")
 
     for _ in range(ship_num):
         populate_board(player_board)
