@@ -21,6 +21,7 @@ class Game:
         for row in self.board:
             print(" ".join(row))
     
+
     def guess(self, x, y):
         self.guesses.append((x, y))
         self.board[x][y] = "X"
@@ -31,6 +32,7 @@ class Game:
         else:
             return "Miss"
     
+
     def add_ship(self, x, y, type="computer"):
         if len(self.ships) >= self.ship_num:
             print("Error: you cannot add any more ships!")
@@ -45,6 +47,7 @@ def random_point(size):
     Returns a random integer between 0 and size.
     This will be used for the computers guesses.
     """
+    #Using randint to generate a number between 0 and the size of the board minus 1(Due to indexing)
     return randint(0, size -1)
 
 
@@ -73,10 +76,23 @@ def valid_coordinates(x, y, board):
 def populate_board(board):
 
 
+
 def make_guess(board):
+    """
+    Prompts user to input their guess, computer's guess is randomly generated
+    using previously defined random point function
+    """
+    row_guess = input("Enter a row:/n")
+
+    col_guess = input("Enter a column:/n")
+
+
 
 
 def play_game(computer_board, player_board):
+    """
+    
+    """
 
 
 def new_game():
@@ -89,6 +105,9 @@ def new_game():
     ship_num = 4
     scores["computer"] = 0
     scores["player"] = 0
+
+
+    player_name = input("Please enter your name: ")
 
     computer_board = Game(size, ship_num, "Computer", type="computer")
     player_board = Game(size, ship_num, player_name, type="player")
