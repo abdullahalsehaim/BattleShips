@@ -17,11 +17,12 @@ class Game:
         self.guesses = []
         self.ships = []
     
+    #Removes quotation marks and stacks rows
     def print(self):
         for row in self.board:
             print(" ".join(row))
     
-
+    #Appends a guess into the guesses list
     def guess(self, x, y):
         self.guesses.append((x, y))
         self.board[x][y] = "X"
@@ -74,6 +75,10 @@ def valid_coordinates(x, y, board):
 
 
 def populate_board(board):
+    """
+    Creates random ship placement for both user and computer
+    """
+    
 
 
 
