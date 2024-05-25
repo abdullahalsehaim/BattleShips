@@ -76,7 +76,8 @@ def valid_coordinates(x, y, board):
 
 def populate_board(board):
     """
-    Creates random ship placement for both user and computer
+    Creates random ship placement for both user and computer.
+    Users ships will be visible in the terminal, computers will not be.
     """
     
 
@@ -87,13 +88,21 @@ def make_guess(board):
     Prompts user to input their guess, computer's guess is randomly generated
     using previously defined random point function.
     """
-    if board == "player":
-        row_guess = input("Enter a row:\n")
-        col_guess = input("Enter a column:\n")
-        user_guess = (row_guess, col_guess)
-        return user_guess
-    elif board == "computer":
-        cpu_guess = (random_point(size), random_point(size))
+    if self.type == "player":
+
+        While True:
+            row_guess = input("Enter a row:\n")
+            col_guess = input("Enter a column:\n")
+            if valid_coordinates(row_guess, col_guess, player_board):
+                break
+        return (row_guess, col_guess)
+    
+    elif self.type == "computer":
+
+        While True:
+            cpu_guess = (random_point(size), random_point(size))
+            if valid_coordinates((cpu_guess(0)), (cpu_guess(1))):
+                break
         return cpu_guess
 
 
@@ -110,6 +119,8 @@ def play_game(computer_board, player_board):
     Establishes each new round of play. Continues until user or CPU 
     reaches a score of 4
     """
+    make_guess(player_board)
+    make_guess(computer_board)
 
 
 def new_game():
