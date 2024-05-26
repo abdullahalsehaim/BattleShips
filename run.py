@@ -105,15 +105,6 @@ def make_guess(board):
                 break
         return cpu_guess
 
-
-
-    
-
-    
-
-
-
-
 def play_game(computer_board, player_board):
     """
     Establishes each new round of play. Continues until user or CPU 
@@ -154,9 +145,13 @@ def new_game():
     ship_num = 4
     scores["computer"] = 0
     scores["player"] = 0
-
-
-    player_name = input("Please enter your name: ")
+    print("=" * 35)
+    print("Welcome to BATTLESHIPS GAME!")
+    print(f"The Board size is {size} X {size}. Player and Computer have {ship_num} ships each.")
+    print("Board row and column coordinates start at 0.")
+    print("=" * 35)
+    player_name = input("Please enter your name:\n")
+    print("=" * 35)
 
     computer_board = Game(size, ship_num, "Computer", type="computer")
     player_board = Game(size, ship_num, player_name, type="player")
