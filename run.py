@@ -132,6 +132,23 @@ def play_game(computer_board, player_board):
         print("After this round, the scores are:")
         print(f"{player_name}: {scores["player"]}. Computer: {scores["computer"]}")
 
+        continue_game = input("Press any key to continue game, press f to quit:")
+        if continue_game == "f":
+            break
+            #new_game()
+        else:
+            pass
+    
+    if scores["player"] == 4:
+        print("GAME OVER")
+        print(f"{player_name} wins! Congratulations")
+    elif scores["computer"] ==4:
+        print("GAME OVER")
+        print("Computer wins, better luck next time!")
+
+    print("=" * 35)
+    start_new_game = input("Enter any key to start a new game")
+
         
 
 
