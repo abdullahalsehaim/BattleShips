@@ -137,6 +137,11 @@ def play_game(computer_board, player_board):
             scores["computer"] +=1
         elif guess(computer_guess(0), computer_guess(1)) == "Miss":
             print("Computer missed this time.")
+        
+        print("After this round, the scores are:")
+        print(f"{player_name}: {scores["player"]}. Computer: {scores["computer"]}")
+
+        
 
 
 def new_game():
