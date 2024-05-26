@@ -90,16 +90,16 @@ def make_guess(board):
     """
     if self.type == "player":
 
-        While True:
-            row_guess = input("Enter a row:\n")
-            col_guess = input("Enter a column:\n")
+        while True:
+            row_guess = int(input("Enter a row:\n"))
+            col_guess = int(input("Enter a column:\n"))
             if valid_coordinates(row_guess, col_guess, player_board):
                 break
         return (row_guess, col_guess)
     
     elif self.type == "computer":
 
-        While True:
+        while True:
             cpu_guess = (random_point(size), random_point(size))
             if valid_coordinates((cpu_guess(0)), (cpu_guess(1))):
                 break
@@ -119,8 +119,24 @@ def play_game(computer_board, player_board):
     Establishes each new round of play. Continues until user or CPU 
     reaches a score of 4
     """
-    make_guess(player_board)
-    make_guess(computer_board)
+    while scores["player"] or scores["computer"] < 4:
+
+        player_guess = make_guess(player_board)
+        print(f"Player guessed: {player_guess}")
+        if guess(player_guess(0), player_guess(1)) == "Hit":
+            print("Player hit this time.")
+            scores["player"] +=1
+        elif guess(player_guess(0), player_guess(1)) == "Miss":
+            print("Player missed this time.")
+
+
+        computer_guess = make_guess(computer_board)
+        print(f"Computer guessed: {computer_guess}")
+        if guess(computer_guess(0), computer_guess(1)) == "Hit":
+            print("Computer hit this time.")
+            scores["computer"] +=1
+        elif guess(computer_guess(0), computer_guess(1)) == "Miss":
+            print("Computer missed this time.")
 
 
 def new_game():
@@ -143,5 +159,9 @@ def new_game():
     for _ in range(ship_num):
         populate_board(player_board)
         populate_board(computer_board)
+
+    #play_game(computer_board, player_board)
+
+#new_game()
 
 
