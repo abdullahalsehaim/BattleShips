@@ -1,7 +1,5 @@
 from random import randint
 
-scores = {"computer": 0, "user": 0}
-
 class Game:
     """
     The class which will set up our game. 
@@ -54,41 +52,30 @@ def random_point(size):
 
 def valid_coordinates(x, y, board):
     """
-    Ensure coorindate is an actual location on the board, 
-    also has not already been selected by user.
+    Ensure coorindate is an actual location on the board,
+    has not already been selected by user and rejects non-numeric input.
     """
     try:
-    # Try converting the value to a float
-        float(x)
-        return True
+        int(x)
+        int(y)
     except ValueError:
-    # If conversion fails, it's not a number
-        print("Error: Input must be a number.")
-        return False
-
-    try:
-    # Try converting the value to a float
-        float(y)
-        return True
-    except ValueError:
-    # If conversion fails, it's not a number
         print("Error: Input must be a number.")
         return False
 
     #Checks if coordinate is within boundaries of the board
     if not (0 <= x < board.size and 0 <= y < board.size):
-        print("Value must be between 0 and 4")
+        print("Value must be between 0 and", board.size-1)
         return False
     
     #Checks if the coordinate has already been selected and added to the guesses 
     if (x, y) in board.guesses:
-        print("Coordinate has already been selected, please choose another")
+        print("You have already guessed this coordinate. Please choose another.")
         return False
     
     #In this game format ships only take one hit to sink,
     #previous coordinates cannot be valid
     #Check if spot is already occupied by another ship
-    return (x, y) not in self.ships
+    return (x, y) not in board.ships
     
 
 
@@ -100,7 +87,7 @@ def populate_board(board):
 
     while True:
         new_ship = (random_point(board.size), random_point(board.size))
-        if (new_ship[0], new_ship[1]) not in board.guesses:
+        if (new_ship[0], new_ship[1]) not in board.ships:
             board.add_ship(new_ship[0], new_ship[1], type)
             break
 
@@ -114,8 +101,22 @@ def make_guess(board):
     if board.type == "player":
 
         while True:
-            row_guess = int(input("Enter a row:\n"))
-            col_guess = int(input("Enter a column:\n"))
+            try:
+                row_guess = input("Enter a row:\n")
+                int(row_guess)
+            except ValueError:
+                print("Error: Input must be a number")
+                return False
+            
+        while True:
+            try:
+                col_guess = input("Enter a column:\n")
+                int(col_guess)
+            except ValueError:
+                print("Error: Input must be a number")
+                return False
+            
+            
             if valid_coordinates(row_guess, col_guess, board):
                 break
         return (row_guess, col_guess)
