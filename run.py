@@ -153,10 +153,10 @@ def play_game(computer_board, player_board, computer_score, player_score):
         
         print("After this round, the scores are:")
         print(f"{player_board.name}: {player_score}. Computer: {computer_score}")
-        print(player_board.player_guesses)
-        print(player_board.computer_guesses)
-        print(computer_board.computer_guesses)
-        print(computer_board.player_guesses)
+        #print(player_board.player_guesses)
+        #print(player_board.computer_guesses)
+        #print(computer_board.computer_guesses)
+        #print(computer_board.player_guesses)
 
         continue_game = input("Press any key to continue game, press f to quit:")
         if continue_game == "f":
