@@ -143,19 +143,19 @@ def play_game(computer_board, player_board, computer_score, player_score):
 
         player_guess = make_guess(player_board)
         print(f"Player guessed: {player_guess}")
-        if player_board.guess(player_guess[0], player_guess[1]) == "Hit":
+        if computer_board.guess(player_guess[0], player_guess[1]) == "Hit":
             print("Player hit this time.")
             player_score +=1
-        elif player_board.guess(player_guess[0], player_guess[1]) == "Miss":
+        elif computer_board.guess(player_guess[0], player_guess[1]) == "Miss":
             print("Player missed this time.")
 
 
         computer_guess = make_guess(computer_board)
         print(f"Computer guessed: {computer_guess}")
-        if computer_board.guess(computer_guess[0], computer_guess[1]) == "Hit":
+        if player_board.guess(computer_guess[0], computer_guess[1]) == "Hit":
             print("Computer hit this time.")
             computer_score +=1
-        elif computer_board.guess(computer_guess[0], computer_guess[1]) == "Miss":
+        elif player_board.guess(computer_guess[0], computer_guess[1]) == "Miss":
             print("Computer missed this time.")
         
         print("After this round, the scores are:")
