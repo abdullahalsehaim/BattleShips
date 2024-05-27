@@ -58,12 +58,12 @@ def valid_coordinates(x, y, board):
     also has not already been selected by user.
     """
     #Checks if coordinate is within boundaries of the board
-    if not (0 <= x < self.size and 0 <= y < self.size):
+    if not (0 <= x < board.size and 0 <= y < board.size):
         print("Value must be between 0 and 4")
         return False
     
     #Checks if the coordinate has already been selected and added to the guesses 
-    if (x, y) in self.guesses:
+    if (x, y) in board.guesses:
         print("Coordinate has already been selected, please choose another")
         return False
     
@@ -81,9 +81,9 @@ def populate_board(board):
     """
 
     while True:
-        new_ship = (random_point(size), random_point(size))
-        if (new_ship(0), new_ship(1)) not in self.guesses:
-            add_ship(new_ship(0), new_ship(1), type)
+        new_ship = (random_point(board.size), random_point(board.size))
+        if (new_ship[0], new_ship[1]) not in board.guesses:
+            board.add_ship(new_ship[0], new_ship[1], type)
             break
     
 
@@ -94,61 +94,59 @@ def make_guess(board):
     Prompts user to input their guess, computer's guess is randomly generated
     using previously defined random point function.
     """
-    if self.type == "player":
+    if board.type == "player":
 
         while True:
             row_guess = int(input("Enter a row:\n"))
             col_guess = int(input("Enter a column:\n"))
-            if valid_coordinates(row_guess, col_guess, player_board):
+            if valid_coordinates(row_guess, col_guess, board):
                 break
         return (row_guess, col_guess)
     
-    elif self.type == "computer":
+    elif board.type == "computer":
 
         while True:
-            cpu_guess = (random_point(size), random_point(size))
-            if valid_coordinates((cpu_guess(0)), (cpu_guess(1))):
+            cpu_guess = (random_point(board.size), random_point(board.size))
+            if valid_coordinates(cpu_guess[0], cpu_guess[1]):
                 break
         return cpu_guess
 
-def play_game(computer_board, player_board):
+def play_game(computer_board, player_board, computer_score, player_score):
     """
     Establishes each new round of play. Continues until user or CPU 
-    reaches a score of 4
+    reaches a score of ship_num (meaning all ships are sunk)
     """
-    while player_score or computer_score < 4:
+    while player_score < computer_board.ship_num and computer_score < player_board.ship_num:
 
         player_guess = make_guess(player_board)
         print(f"Player guessed: {player_guess}")
-        if guess(player_guess(0), player_guess(1)) == "Hit":
+        if guess(player_guess[0], player_guess[1]) == "Hit":
             print("Player hit this time.")
             player_score +=1
-        elif guess(player_guess(0), player_guess(1)) == "Miss":
+        elif guess(player_guess[0], player_guess[1]) == "Miss":
             print("Player missed this time.")
 
 
         computer_guess = make_guess(computer_board)
         print(f"Computer guessed: {computer_guess}")
-        if guess(computer_guess(0), computer_guess(1)) == "Hit":
+        if guess(computer_guess[0], computer_guess[1]) == "Hit":
             print("Computer hit this time.")
             computer_score +=1
-        elif guess(computer_guess(0), computer_guess(1)) == "Miss":
+        elif guess(computer_guess[0], computer_guess[1]) == "Miss":
             print("Computer missed this time.")
         
         print("After this round, the scores are:")
-        print(f"{player_name}: {player_score}. Computer: {computer_score}")
+        print(f"{player_board.name}: {player_score}. Computer: {computer_score}")
 
         continue_game = input("Press any key to continue game, press f to quit:")
         if continue_game == "f":
             break
-            new_game()
-        else:
-            pass
     
-    if scores["player"] == 4:
+    # Check for winners after loop based on ship count sunk
+    if player_score == computer_board.ship_num:
         print("GAME OVER")
-        print(f"{player_name} wins! Congratulations")
-    elif computer_score ==4:
+        print(f"{player_board.name} wins! Congratulations")
+    elif computer_score == player_board.ship_num:
         print("GAME OVER")
         print("Computer wins, better luck next time!")
 
@@ -179,11 +177,15 @@ def new_game():
     computer_board = Game(size, ship_num, "Computer", type="computer")
     player_board = Game(size, ship_num, player_name, type="player")
 
+    #print(computer_board.type)
+    #print(player_board)
+
     for _ in range(ship_num):
         populate_board(player_board)
         populate_board(computer_board)
 
-    play_game(computer_board, player_board)
+    play_game(computer_board, player_board, computer_score, player_score)
+
 
 new_game()
 
