@@ -85,7 +85,8 @@ def populate_board(board):
         if (new_ship[0], new_ship[1]) not in board.guesses:
             board.add_ship(new_ship[0], new_ship[1], type)
             break
-    
+    print(f"{board.name}'s Board")
+    board.print()
 
 
 
