@@ -12,7 +12,9 @@ class Game:
         self.ship_num = ship_num
         self.name = name
         self.type = type
-        self.guesses = []
+        self.player_guesses = []
+        self.computer_guesses = []
+        #self.guesses = []
         self.ships = []
     
     #Removes quotation marks and stacks rows
@@ -22,8 +24,13 @@ class Game:
     
     #Appends a guess into the guesses list
     def guess(self, x, y):
-        self.guesses.append((x, y))
-        self.board[x][y] = "X"
+        if self.type == "player":
+            self.player_guesses.append((x, y))
+            self.board[x][y] = "X"
+        
+        elif self.type == "computer":
+            self.computer_guesses.append((x, y))
+            self.board[x][y] = "X"
 
         if (x, y) in self.ships:
             self.board[x][y] = "*"
@@ -50,27 +57,28 @@ def random_point(size):
     return randint(0, size -1)
 
 
-def valid_coordinates(x, y, board):
+def valid_coordinates(x, y, board, computer_board):
     """
     Ensure coorindate is an actual location on the board,
     has not already been selected by user and rejects non-numeric input.
     """
-    try:
-        int(x)
-        int(y)
-    except ValueError:
-        print("Error: Input must be a number.")
-        return False
-
     #Checks if coordinate is within boundaries of the board
     if not (0 <= x < board.size and 0 <= y < board.size):
         print("Value must be between 0 and", board.size-1)
         return False
     
     #Checks if the coordinate has already been selected and added to the guesses 
-    if (x, y) in board.guesses:
-        print("You have already guessed this coordinate. Please choose another.")
+    if board.type == "player" and (x, y) in computer_board.computer_guesses:
+        print("You have already guessed this coordinate, please pick another.")
         return False
+    
+    elif board.type == "computer" and (x, y) in board.computer_guesses:
+        print("You have already guessed this coordinate, please pick another.")
+        return False
+
+    #if (x, y) in board.guesses:
+    #    print("You have already guessed this coordinate. Please choose another.")
+    #   return False
     
     #In this game format ships only take one hit to sink,
     #previous coordinates cannot be valid
@@ -91,9 +99,7 @@ def populate_board(board):
             board.add_ship(new_ship[0], new_ship[1], type)
             break
 
-
-
-def make_guess(board):
+def make_guess(board, computer_board):
     """
     Prompts user to input their guess, computer's guess is randomly generated
     using previously defined random point function.
@@ -103,7 +109,7 @@ def make_guess(board):
             try:
                 row_guess = int(input("Enter a row:\n"))
                 col_guess = int(input("Enter a column:\n"))
-                if valid_coordinates(row_guess, col_guess, board):
+                if valid_coordinates(row_guess, col_guess, board, computer_board):
                     return (row_guess, col_guess)
             except ValueError:
                 print("Error: Input must be a number")
@@ -112,9 +118,8 @@ def make_guess(board):
 
         while True:
             cpu_guess = (random_point(board.size), random_point(board.size))
-            if valid_coordinates(cpu_guess[0], cpu_guess[1], board):
-                break
-        return cpu_guess
+            if valid_coordinates(cpu_guess[0], cpu_guess[1], board, computer_board):
+                return cpu_guess
 
 def play_game(computer_board, player_board, computer_score, player_score):
     """
@@ -129,7 +134,7 @@ def play_game(computer_board, player_board, computer_score, player_score):
         print(f"{computer_board.name}'s Board")
         computer_board.print()
 
-        player_guess = make_guess(player_board)
+        player_guess = make_guess(player_board, computer_board)
         print(f"Player guessed: {player_guess}")
         if computer_board.guess(player_guess[0], player_guess[1]) == "Hit":
             print("Player hit this time.")
@@ -138,7 +143,7 @@ def play_game(computer_board, player_board, computer_score, player_score):
             print("Player missed this time.")
 
 
-        computer_guess = make_guess(computer_board)
+        computer_guess = make_guess(computer_board, computer_board)
         print(f"Computer guessed: {computer_guess}")
         if player_board.guess(computer_guess[0], computer_guess[1]) == "Hit":
             print("Computer hit this time.")
@@ -148,8 +153,10 @@ def play_game(computer_board, player_board, computer_score, player_score):
         
         print("After this round, the scores are:")
         print(f"{player_board.name}: {player_score}. Computer: {computer_score}")
-        print(player_board.guesses)
-        print(computer_board.guesses)
+        print(player_board.player_guesses)
+        print(player_board.computer_guesses)
+        print(computer_board.computer_guesses)
+        print(computer_board.player_guesses)
 
         continue_game = input("Press any key to continue game, press f to quit:")
         if continue_game == "f":
