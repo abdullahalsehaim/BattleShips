@@ -70,15 +70,20 @@ def valid_coordinates(x, y, board):
     #In this game format ships only take one hit to sink,
     #previous coordinates cannot be valid
     #Check if spot is already occupied by another ship
-    return (x, y) not in self.ships
+    #return (x, y) not in self.ships
     
 
 
 def populate_board(board):
     """
-    Creates random ship placement for both user and computer.
+    Creates random ship placement.
     Users ships will be visible in the terminal, computers will not be.
     """
+
+    while True:
+        new_ship = (random_point(size), random_point(size))
+        if (new_ship(0), new_ship(1)) not in self.guesses:
+            add_ship(new_ship(0), new_ship(1), type)
     
 
 
@@ -180,5 +185,7 @@ def new_game():
     #play_game(computer_board, player_board)
 
 #new_game()
+
+
 
 
