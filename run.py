@@ -84,6 +84,7 @@ def populate_board(board):
         new_ship = (random_point(size), random_point(size))
         if (new_ship(0), new_ship(1)) not in self.guesses:
             add_ship(new_ship(0), new_ship(1), type)
+            break
     
 
 
@@ -140,7 +141,7 @@ def play_game(computer_board, player_board):
         continue_game = input("Press any key to continue game, press f to quit:")
         if continue_game == "f":
             break
-            #new_game()
+            new_game()
         else:
             pass
     
@@ -182,9 +183,9 @@ def new_game():
         populate_board(player_board)
         populate_board(computer_board)
 
-    #play_game(computer_board, player_board)
+    play_game(computer_board, player_board)
 
-#new_game()
+new_game()
 
 
 
