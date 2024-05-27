@@ -116,13 +116,13 @@ def play_game(computer_board, player_board):
     Establishes each new round of play. Continues until user or CPU 
     reaches a score of 4
     """
-    while scores["player"] or scores["computer"] < 4:
+    while player_score or computer_score < 4:
 
         player_guess = make_guess(player_board)
         print(f"Player guessed: {player_guess}")
         if guess(player_guess(0), player_guess(1)) == "Hit":
             print("Player hit this time.")
-            scores["player"] +=1
+            player_score +=1
         elif guess(player_guess(0), player_guess(1)) == "Miss":
             print("Player missed this time.")
 
@@ -131,12 +131,12 @@ def play_game(computer_board, player_board):
         print(f"Computer guessed: {computer_guess}")
         if guess(computer_guess(0), computer_guess(1)) == "Hit":
             print("Computer hit this time.")
-            scores["computer"] +=1
+            computer_score +=1
         elif guess(computer_guess(0), computer_guess(1)) == "Miss":
             print("Computer missed this time.")
         
         print("After this round, the scores are:")
-        print(f"{player_name}: {scores["player"]}. Computer: {scores["computer"]}")
+        print(f"{player_name}: {player_score}. Computer: {computer_score}")
 
         continue_game = input("Press any key to continue game, press f to quit:")
         if continue_game == "f":
@@ -148,7 +148,7 @@ def play_game(computer_board, player_board):
     if scores["player"] == 4:
         print("GAME OVER")
         print(f"{player_name} wins! Congratulations")
-    elif scores["computer"] ==4:
+    elif computer_score ==4:
         print("GAME OVER")
         print("Computer wins, better luck next time!")
 
@@ -166,8 +166,8 @@ def new_game():
 
     size = 5
     ship_num = 4
-    scores["computer"] = 0
-    scores["player"] = 0
+    computer_score = 0
+    player_score = 0
     print("=" * 35)
     print("Welcome to BATTLESHIPS GAME!")
     print(f"The Board size is {size} X {size}. Player and Computer have {ship_num} ships each.")
