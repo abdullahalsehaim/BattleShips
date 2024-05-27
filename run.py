@@ -99,28 +99,15 @@ def make_guess(board):
     using previously defined random point function.
     """
     if board.type == "player":
-
         while True:
             try:
-                row_guess = input("Enter a row:\n")
-                int(row_guess)
+                row_guess = int(input("Enter a row:\n"))
+                col_guess = int(input("Enter a column:\n"))
+                if valid_coordinates(row_guess, col_guess, board):
+                    return (row_guess, col_guess)
             except ValueError:
                 print("Error: Input must be a number")
-                return False
             
-        while True:
-            try:
-                col_guess = input("Enter a column:\n")
-                int(col_guess)
-            except ValueError:
-                print("Error: Input must be a number")
-                return False
-            
-            
-            if valid_coordinates(row_guess, col_guess, board):
-                break
-        return (row_guess, col_guess)
-    
     elif board.type == "computer":
 
         while True:
@@ -161,6 +148,8 @@ def play_game(computer_board, player_board, computer_score, player_score):
         
         print("After this round, the scores are:")
         print(f"{player_board.name}: {player_score}. Computer: {computer_score}")
+        print(player_board.guesses)
+        print(computer_board.guesses)
 
         continue_game = input("Press any key to continue game, press f to quit:")
         if continue_game == "f":
@@ -200,9 +189,6 @@ def new_game():
 
     computer_board = Game(size, ship_num, "Computer", type="computer")
     player_board = Game(size, ship_num, player_name, type="player")
-
-    #print(computer_board.type)
-    #print(player_board)
 
     for _ in range(ship_num):
         populate_board(player_board)
