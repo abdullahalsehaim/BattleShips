@@ -57,6 +57,24 @@ def valid_coordinates(x, y, board):
     Ensure coorindate is an actual location on the board, 
     also has not already been selected by user.
     """
+    try:
+    # Try converting the value to a float
+        float(x)
+        return True
+    except ValueError:
+    # If conversion fails, it's not a number
+        print("Error: Input must be a number.")
+        return False
+
+    try:
+    # Try converting the value to a float
+        float(y)
+        return True
+    except ValueError:
+    # If conversion fails, it's not a number
+        print("Error: Input must be a number.")
+        return False
+
     #Checks if coordinate is within boundaries of the board
     if not (0 <= x < board.size and 0 <= y < board.size):
         print("Value must be between 0 and 4")
@@ -70,7 +88,7 @@ def valid_coordinates(x, y, board):
     #In this game format ships only take one hit to sink,
     #previous coordinates cannot be valid
     #Check if spot is already occupied by another ship
-    #return (x, y) not in self.ships
+    return (x, y) not in self.ships
     
 
 
@@ -85,8 +103,6 @@ def populate_board(board):
         if (new_ship[0], new_ship[1]) not in board.guesses:
             board.add_ship(new_ship[0], new_ship[1], type)
             break
-    print(f"{board.name}'s Board")
-    board.print()
 
 
 
@@ -108,7 +124,7 @@ def make_guess(board):
 
         while True:
             cpu_guess = (random_point(board.size), random_point(board.size))
-            if valid_coordinates(cpu_guess[0], cpu_guess[1]):
+            if valid_coordinates(cpu_guess[0], cpu_guess[1], board):
                 break
         return cpu_guess
 
@@ -119,21 +135,27 @@ def play_game(computer_board, player_board, computer_score, player_score):
     """
     while player_score < computer_board.ship_num and computer_score < player_board.ship_num:
 
+        print(f"{player_board.name}'s Board")
+        player_board.print()
+
+        print(f"{computer_board.name}'s Board")
+        computer_board.print()
+
         player_guess = make_guess(player_board)
         print(f"Player guessed: {player_guess}")
-        if guess(player_guess[0], player_guess[1]) == "Hit":
+        if player_board.guess(player_guess[0], player_guess[1]) == "Hit":
             print("Player hit this time.")
             player_score +=1
-        elif guess(player_guess[0], player_guess[1]) == "Miss":
+        elif player_board.guess(player_guess[0], player_guess[1]) == "Miss":
             print("Player missed this time.")
 
 
         computer_guess = make_guess(computer_board)
         print(f"Computer guessed: {computer_guess}")
-        if guess(computer_guess[0], computer_guess[1]) == "Hit":
+        if computer_board.guess(computer_guess[0], computer_guess[1]) == "Hit":
             print("Computer hit this time.")
             computer_score +=1
-        elif guess(computer_guess[0], computer_guess[1]) == "Miss":
+        elif computer_board.guess(computer_guess[0], computer_guess[1]) == "Miss":
             print("Computer missed this time.")
         
         print("After this round, the scores are:")
