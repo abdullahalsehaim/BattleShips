@@ -68,14 +68,14 @@ def valid_coordinates(x, y, board, computer_board):
         return False
     
     #Checks if the coordinate has already been selected and added to the guesses 
-    if board.type == "player" and (x, y) in computer_board.computer_guesses:
-        print("You have already guessed this coordinate, please pick another.")
-        return False
-    
-    elif board.type == "computer" and (x, y) in board.computer_guesses:
-        print("You have already guessed this coordinate, please pick another.")
-        return False
-
+    if board.type == "player":
+        if (x, y) in board.player_guesses or (x, y) in computer_board.computer_guesses:
+            print("You have already guessed this coordinate, please pick another.")
+            return False
+    elif board.type == "computer":
+        if (x, y) in board.computer_guesses or (x, y) in computer_board.player_guesses:
+            print("You have already guessed this coordinate, please pick another.")
+            return False
     #if (x, y) in board.guesses:
     #    print("You have already guessed this coordinate. Please choose another.")
     #   return False
