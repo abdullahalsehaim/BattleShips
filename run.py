@@ -63,19 +63,19 @@ def valid_coordinates(x, y, board, computer_board, player_board):
     has not already been selected by user and rejects non-numeric input.
     """
     #Checks if coordinate is within boundaries of the board
-    if not (0 <= x < board.size and 0 <= y < board.size):
+    if not 0 <= x < board.size or not 0 <= y < board.size:
         print("Value must be between 0 and", board.size-1)
         return False
     
     #Checks if the coordinate has already been selected and added to the guesses 
     if board.type == "player":
-        if (x, y) in computer_board.computer_guesses or (x, y) in board.player_guesses:
+        if (x, y) in computer_board.computer_guesses: #or (x, y) in board.player_guesses:
             print("You have already guessed this coordinate, please pick another.")
             return False
     
     if board.type == "computer":
         if (x, y) in player_board.player_guesses: #or (x, y) in computer_board.player_guesses:
-            print("You have already guessed this coordinate, please pick another.")
+            #print("You have already guessed this coordinate, please pick another.")
             return False
     #if (x, y) in board.guesses:
     #    print("You have already guessed this coordinate. Please choose another.")
@@ -155,10 +155,10 @@ def play_game(computer_board, player_board, computer_score, player_score):
         
         print("After this round, the scores are:")
         print(f"{player_board.name}: {player_score}. Computer: {computer_score}")
-        print(player_board.player_guesses)
-        print(player_board.computer_guesses)
-        print(computer_board.computer_guesses)
-        print(computer_board.player_guesses)
+        #print(player_board.player_guesses)
+        #print(player_board.computer_guesses)
+        #print(computer_board.computer_guesses)
+        #print(computer_board.player_guesses)
 
         continue_game = input("Press any key to continue game, press f to quit:")
         if continue_game == "f":
