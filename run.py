@@ -67,7 +67,7 @@ def valid_coordinates(x, y, board, computer_board, player_board):
         print("Value must be between 0 and", board.size-1)
         return False
     
-    #Checks if the coordinate has already been selected and added to the guesses 
+    #Checks if the coordinate has already been selected  
     if board.type == "player":
         if (x, y) in computer_board.computer_guesses: #or (x, y) in board.player_guesses:
             print("You have already guessed this coordinate, please pick another.")
@@ -77,14 +77,9 @@ def valid_coordinates(x, y, board, computer_board, player_board):
         if (x, y) in player_board.player_guesses: #or (x, y) in computer_board.player_guesses:
             #print("You have already guessed this coordinate, please pick another.")
             return False
-    #if (x, y) in board.guesses:
-    #    print("You have already guessed this coordinate. Please choose another.")
-    #   return False
-    
-    #In this game format ships only take one hit to sink,
-    #previous coordinates cannot be valid
-    #Check if spot is already occupied by another ship
-    return (x, y) not in board.ships
+
+    #If all above checks have passed, the coordinate is valid so returns true
+    return True
     
 
 
@@ -112,11 +107,13 @@ def make_guess(board, computer_board, player_board):
                 col_guess = int(input("Enter a column:\n"))
                 if valid_coordinates(row_guess, col_guess, board, computer_board, player_board):
                     return (row_guess, col_guess)
-                    break
+                    #break
             except ValueError:
                 print("Error: Input must be a number")
-            
-    elif board.type == "computer":
+            #else:
+            #    print("Invalid input. Please enter a number between 0 and", board.size-1)
+                
+    if board.type == "computer":
 
         while True:
             cpu_guess = (random_point(board.size), random_point(board.size))
