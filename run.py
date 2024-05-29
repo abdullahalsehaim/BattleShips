@@ -14,7 +14,6 @@ class Game:
         self.type = type
         self.player_guesses = []
         self.computer_guesses = []
-        #self.guesses = []
         self.ships = []
     
     #Removes quotation marks and stacks rows
@@ -39,6 +38,7 @@ class Game:
             return "Miss"
     
 
+    #Adds ship coordinates to list
     def add_ship(self, x, y, type="computer"):
         if len(self.ships) >= self.ship_num:
             print("Error: you cannot add any more ships!")
@@ -74,8 +74,7 @@ def valid_coordinates(x, y, board, computer_board, player_board):
             return False
     
     if board.type == "computer":
-        if (x, y) in player_board.player_guesses: #or (x, y) in computer_board.player_guesses:
-            #print("You have already guessed this coordinate, please pick another.")
+        if (x, y) in player_board.player_guesses:
             return False
 
     #If all above checks have passed, the coordinate is valid so returns true
@@ -92,16 +91,17 @@ def valid_ship(x, y, board):
         return False
     
     #Checks if this position has already been selected
-    if (x, y) in board.ships: #or (x, y) in board.player_guesses:
+    if (x, y) in board.ships:
         print("You have already guessed this coordinate, please pick another.")
         return False
 
+    #If ship coordinates pass other two checks returns true
     return True
     
-def valid_size(size):
+def valid_size():
     """
-    When a player is prompted to choose the size of the board, 
-    this function will check if the size is valid
+    Prompts player to choose the size of the board, 
+    will check if the size is valid
     """
     while True:
         try:
@@ -110,9 +110,22 @@ def valid_size(size):
                 return size
             else:
                 print("Error: Please enter a board size between 4 and 8 (inclusive).")
-    except ValueError:
-        print("Error please enter an integer")
+        except ValueError:
+            print("Error please enter an integer")
 
+def valid_num():
+    """
+    Prompts user to select number of ships, checks if input is valid.
+    """
+    while True:
+        try:
+            ship_num = int(input("Enter the desired number of ships (between 2 and 6): "))
+            if 2 <= ship_num <= 6:
+                return ship_num
+            else:
+                print("Error: Please enter a ship number between 2 and 6 (inclusive).")
+        except ValueError:
+            print("Error please enter an integer")
 
 def populate_board(board):
     """
@@ -203,10 +216,6 @@ def play_game(computer_board, player_board, computer_score, player_score):
         
         print("After this round, the scores are:")
         print(f"{player_board.name}: {player_score}. Computer: {computer_score}")
-        #print(player_board.player_guesses)
-        #print(player_board.computer_guesses)
-        #print(computer_board.computer_guesses)
-        #print(computer_board.player_guesses)
 
         continue_game = input("Press any key to continue game, press f to quit:")
         if continue_game == "f":
@@ -231,18 +240,17 @@ def new_game():
     Begins a new game. Establishes size of board, number of ships, 
     sets scores to 0, and randomly assigns boats.
     """
-
-    size = 5
-    ship_num = 4
     computer_score = 0
     player_score = 0
     print("=" * 35)
     print("Welcome to BATTLESHIPS GAME!")
     player_name = input("Please enter your name:\n")
-    print(f"Welcome {player_name}, please select the size of the board and how many ships each player will have.")
-    
+    print(f"Welcome {player_name}, please select the size of the board and how many ships each player will have.\n")
+    size = valid_size()
+    print("Board size confirmed.\n")
+    ship_num = valid_num()
     print(f"The Board size is {size} X {size}. Player and Computer have {ship_num} ships each.")
-    print(f"Top left coorindate is (0, 0), bottom right coordinate is ({size}, {size})")
+    print(f"Top left coorindate is (0, 0), bottom right coordinate is ({size-1}, {size-1})")
     print("=" * 35)
     print("=" * 35)
 
@@ -259,7 +267,3 @@ def new_game():
 
 
 new_game()
-
-
-
-
