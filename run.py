@@ -81,7 +81,7 @@ def valid_coordinates(x, y, board, computer_board, player_board):
     #If all above checks have passed, the coordinate is valid so returns true
     return True
     
-def valid_ship():
+def valid_ship(x, y, board):
     """
     Ensures user ship placement is within the boundaries of the board
     and no two ships are placed in the same coordinate.
@@ -107,6 +107,8 @@ def populate_board(board):
     Computers ships will be randomly generated. 
     Users ships will be visible in the terminal, computers will not be.
     """
+    if board.type == "player":
+        place_ship = get
 
     while True:
         new_ship = (random_point(board.size), random_point(board.size))
