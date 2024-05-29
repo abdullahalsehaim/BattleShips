@@ -81,11 +81,30 @@ def valid_coordinates(x, y, board, computer_board, player_board):
     #If all above checks have passed, the coordinate is valid so returns true
     return True
     
+def valid_ship():
+    """
+    Ensures user ship placement is within the boundaries of the board
+    and no two ships are placed in the same coordinate.
+    """
+    #Checks if coordinate is within boundaries of the board
+    if not 0 <= x < board.size or not 0 <= y < board.size:
+        print("Value must be between 0 and", board.size-1)
+        return False
+    
+    #Checks if this position has already been selected
+    if (x, y) in board.ships: #or (x, y) in board.player_guesses:
+            print("You have already guessed this coordinate, please pick another.")
+            return False
+
+    return True
+    
 
 
 def populate_board(board):
     """
-    Creates random ship placement.
+    This function puts ships on the board. 
+    Prompts user to place thier ships on the board.
+    Computers ships will be randomly generated. 
     Users ships will be visible in the terminal, computers will not be.
     """
 
@@ -94,6 +113,21 @@ def populate_board(board):
         if (new_ship[0], new_ship[1]) not in board.ships:
             board.add_ship(new_ship[0], new_ship[1], type)
             break
+
+def get_ship_placement():
+    """
+    Prompts user to choose their ship placement on the board
+    """
+    while True:
+        try:
+            ship_row = int(input("Enter a row for your ship (0 - {}): ".format(board.size - 1)))
+            ship_col = int(input("Enter a column for your ship (0 - {}): ".format(board.size - 1)))
+            if valid_ship(ship_row, ship_col, board):
+                return (ship_row, ship_col)
+        else:
+            print("Invalid coordinates. Please try again.")
+        except ValueError:
+            print("Error: Input must be a number")
 
 def make_guess(board, computer_board, player_board):
     """
