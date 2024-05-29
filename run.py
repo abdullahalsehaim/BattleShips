@@ -93,11 +93,25 @@ def valid_ship(x, y, board):
     
     #Checks if this position has already been selected
     if (x, y) in board.ships: #or (x, y) in board.player_guesses:
-            print("You have already guessed this coordinate, please pick another.")
-            return False
+        print("You have already guessed this coordinate, please pick another.")
+        return False
 
     return True
     
+def valid_size(size):
+    """
+    When a player is prompted to choose the size of the board, 
+    this function will check if the size is valid
+    """
+    while True:
+        try:
+            size = int(input("Enter the desired board size (between 4 and 8): "))
+            if 4 <= size <= 8:
+                return size
+            else:
+                print("Error: Please enter a board size between 4 and 8 (inclusive).")
+    except ValueError:
+        print("Error please enter an integer")
 
 
 def populate_board(board):
@@ -108,28 +122,32 @@ def populate_board(board):
     Users ships will be visible in the terminal, computers will not be.
     """
     if board.type == "player":
-        place_ship = get
+        place_ship = get_ship_placement(board)
+        board.add_ship(place_ship[0], place_ship[1], type)
+        print("Player coordinate has been added")
 
-    while True:
-        new_ship = (random_point(board.size), random_point(board.size))
-        if (new_ship[0], new_ship[1]) not in board.ships:
-            board.add_ship(new_ship[0], new_ship[1], type)
-            break
+    
+    if board.type == "computer":
+        while True:
+            new_ship = (random_point(board.size), random_point(board.size))
+            if (new_ship[0], new_ship[1]) not in board.ships:
+                board.add_ship(new_ship[0], new_ship[1], type)
+                break
 
-def get_ship_placement():
-    """
-    Prompts user to choose their ship placement on the board
-    """
-    while True:
-        try:
-            ship_row = int(input("Enter a row for your ship (0 - {}): ".format(board.size - 1)))
-            ship_col = int(input("Enter a column for your ship (0 - {}): ".format(board.size - 1)))
-            if valid_ship(ship_row, ship_col, board):
-                return (ship_row, ship_col)
-        else:
-            print("Invalid coordinates. Please try again.")
-        except ValueError:
-            print("Error: Input must be a number")
+def get_ship_placement(board):
+  """
+  Prompts user to choose their ship placement on the board
+  """
+  while True:
+    try:
+        ship_row = int(input("Enter a row for your ship\n"))
+        ship_col = int(input("Enter a column for your ship\n"))
+        if valid_ship(ship_row, ship_col, board):
+            return (ship_row, ship_col)
+    except ValueError:
+        print("Error: Input must be a number")
+
+        
 
 def make_guess(board, computer_board, player_board):
     """
@@ -143,11 +161,8 @@ def make_guess(board, computer_board, player_board):
                 col_guess = int(input("Enter a column:\n"))
                 if valid_coordinates(row_guess, col_guess, board, computer_board, player_board):
                     return (row_guess, col_guess)
-                    #break
             except ValueError:
                 print("Error: Input must be a number")
-            #else:
-            #    print("Invalid input. Please enter a number between 0 and", board.size-1)
                 
     if board.type == "computer":
 
@@ -223,14 +238,18 @@ def new_game():
     player_score = 0
     print("=" * 35)
     print("Welcome to BATTLESHIPS GAME!")
-    print(f"The Board size is {size} X {size}. Player and Computer have {ship_num} ships each.")
-    print("Board row and column coordinates start at 0.")
-    print("=" * 35)
     player_name = input("Please enter your name:\n")
+    print(f"Welcome {player_name}, please select the size of the board and how many ships each player will have.")
+    
+    print(f"The Board size is {size} X {size}. Player and Computer have {ship_num} ships each.")
+    print(f"Top left coorindate is (0, 0), bottom right coordinate is ({size}, {size})")
+    print("=" * 35)
     print("=" * 35)
 
     computer_board = Game(size, ship_num, "Computer", type="computer")
     player_board = Game(size, ship_num, player_name, type="player")
+
+    print(f"Number of ships is {ship_num}, please now select {ship_num} coordinates.")
 
     for _ in range(ship_num):
         populate_board(player_board)
