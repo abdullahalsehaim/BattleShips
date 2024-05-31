@@ -105,7 +105,7 @@ def valid_size():
     """
     while True:
         try:
-            size = int(input("Enter the desired board size (between 4 and 8): "))
+            size = int(input("Enter the desired board size (between 4 and 8):\n"))
             if 4 <= size <= 8:
                 return size
             else:
@@ -119,7 +119,7 @@ def valid_num():
     """
     while True:
         try:
-            ship_num = int(input("Enter the desired number of ships (between 2 and 6): "))
+            ship_num = int(input("Enter the desired number of ships (between 2 and 6):\n"))
             if 2 <= ship_num <= 6:
                 return ship_num
             else:
@@ -217,7 +217,7 @@ def play_game(computer_board, player_board, computer_score, player_score):
         print("After this round, the scores are:")
         print(f"{player_board.name}: {player_score}. Computer: {computer_score}")
 
-        continue_game = input("Press any key to continue game, press f to quit:")
+        continue_game = input("Press any key to continue game, press f to quit:\n")
         if continue_game == "f":
             break
     
@@ -230,7 +230,7 @@ def play_game(computer_board, player_board, computer_score, player_score):
         print("Computer wins, better luck next time!")
 
     print("=" * 35)
-    start_new_game = input("Enter any key to start a new game")
+    start_new_game = input("Enter any key to start a new game\n")
 
         
 
@@ -249,8 +249,8 @@ def new_game():
     size = valid_size()
     print("Board size confirmed.\n")
     ship_num = valid_num()
-    print(f"The Board size is {size} X {size}. Player and Computer have {ship_num} ships each.")
-    print(f"Top left coorindate is (0, 0), bottom right coordinate is ({size-1}, {size-1})")
+    print(f"The Board size is {size} X {size}. Player and Computer have {ship_num} ships each.\n")
+    print(f"Top left coorindate is (0, 0), bottom right coordinate is ({size-1}, {size-1})\n")
     print("=" * 35)
     print("=" * 35)
 
