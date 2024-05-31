@@ -5,7 +5,7 @@ This is a terminal based battleships game.
 In this version users will try to beat the computer by sinking all of their ships before 
 their ships are sunk.
 
-
+![Heroku Deployment Terminal Displayed on a variety of devices.](assets/images/battleships_device_mockup.png)
 
 ## Gameplay
 + Player enters their name into the terminal.
@@ -94,6 +94,8 @@ ship guess coordinates.
 + Most functions in this terminal based game relied on lists.
 
 ##### Validator Testing
++ I used Code Institute's Pep8 validator and received no errors
+![Screenshot of Pep8 Validator returning no errors](assets/images/pep_result.PNG)
 
 
 ##### Terminal Based Testing
@@ -101,6 +103,19 @@ ship guess coordinates.
 + I tested the game on the Heroku Terminal
 
 ## Deployment
+As this project was using the backend language of Python, I needed to use Heroku to deploy a mock terminal.
+
+I followed Code Institutes Python essentials tutorial to deploy it using the following steps.
+
++ On the main page of Heroku, select Create a new app
++ Under the settings section, I named my app and selected my region.
++ Following this, in the setting section I chose python and nodejs as my buildpacks in the order mentioned below:
+1. Python
+2. Nodejs
++ As this project did not use APIs or External packages I did not need to Config Vars.
++ Under the deployment tab I chose GitHub as the deployment method.
++ I then signed in and connected my GitHub Account.
++ Then I selected manual deploy.
 
 ## Credits
 
