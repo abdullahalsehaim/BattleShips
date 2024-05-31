@@ -258,6 +258,7 @@ def new_game():
     player_board = Game(size, ship_num, player_name, type="player")
 
     print(f"Number of ships is {ship_num}, please now select {ship_num} coordinates.")
+    print("=" * 35)
 
     for _ in range(ship_num):
         populate_board(player_board)

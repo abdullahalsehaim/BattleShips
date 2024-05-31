@@ -82,8 +82,6 @@ their ships are sunk.
 #### Unsolved Bugs
 + No unsolved bugs remaining
 
-### Testing
-
 #### Manual Testing
 
 ###### Testing Inputs
@@ -108,4 +106,4 @@ ship guess coordinates.
 
 + Heroku and Code Institute for their deployment terminal
 + Code Institute's Ultimate Battleship Game for the main board class.
-+ Stack Overflow Post for 
++ [Stack Overflow Post](https://stackoverflow.com/questions/5615648/how-can-i-call-a-function-within-a-class) for calling functions within classes
