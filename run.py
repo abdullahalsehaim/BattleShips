@@ -234,7 +234,9 @@ def play_game(computer_board, player_board, computer_score, player_score):
             break
 
     # Check for winners after loop based on ship count sunk
-    if player_score == computer_board.ship_num:
+    if player_score == computer_score:
+        print("Tie Game")
+    elif player_score == computer_board.ship_num:
         print("GAME OVER")
         print(f"{player_board.name} wins! Congratulations")
     elif computer_score == player_board.ship_num:
