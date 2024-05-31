@@ -122,5 +122,5 @@ I followed Code Institutes Python essentials tutorial to deploy it using the fol
 ## Credits
 
 + Heroku and Code Institute for their deployment terminal
-+ Code Institute's Ultimate Battleship Game for the main board class.
++ Code Institute's Ultimate Battleship Game for the main board class and function breakdowns.
 + [Stack Overflow Post](https://stackoverflow.com/questions/5615648/how-can-i-call-a-function-within-a-class) for calling functions within classes
