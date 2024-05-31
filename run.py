@@ -165,8 +165,8 @@ def get_ship_placement(board):
             ship_col = int(input("Enter a column for your ship\n"))
             if valid_ship(ship_row, ship_col, board):
                 return (ship_row, ship_col)
-    except ValueError:
-        print("Error: Input must be a number")
+        except ValueError:
+            print("Error: Input must be a number")
 
 
 def make_guess(board, computer_board, player_board):
@@ -199,8 +199,7 @@ def play_game(computer_board, player_board, computer_score, player_score):
     Establishes each new round of play. Continues until user or CPU
     reaches a score of ship_num (meaning all ships are sunk)
     """
-    while player_score < computer_board.ship_num and
-    computer_score < player_board.ship_num:
+    while (player_score or computer_score) < player_board.ship_num:
 
         print(f"{player_board.name}'s Board")
         player_board.print()
@@ -227,8 +226,8 @@ def play_game(computer_board, player_board, computer_score, player_score):
             print("Computer missed this time.")
 
         print("After this round, the scores are:")
-        print(f"{player_board.name}: {player_score}.
-              Computer: {computer_score}")
+        print(f"{player_board.name}: {player_score}")
+        print(f"Computer: {computer_score}")
 
         continue_game = input("Press any key to continue, press f to quit:\n")
         if continue_game == "f":
@@ -256,23 +255,23 @@ def new_game():
     print("=" * 35)
     print("Welcome to BATTLESHIPS GAME!")
     player_name = input("Please enter your name:\n")
-    print(f"Welcome {player_name}, please select the size of the board
-          and how many ships each player will have.\n")
+    print(f"Welcome {player_name}, please select the size of the board")
+    print("and how many ships each player will have.\n")
     size = valid_size()
     print("Board size confirmed.\n")
     ship_num = valid_num()
-    print(f"The Board size is {size} X {size}.
-          Player and Computer have {ship_num} ships each.\n")
-    print(f"Top left coorindate is (0, 0),
-          bottom right coordinate is ({size-1}, {size-1})\n")
+    print(f"The Board size is {size} X {size}.")
+    print(f"Player and Computer have {ship_num} ships each.\n")
+    print(f"Top left coorindate is (0, 0)")
+    print(f"bottom right coordinate is ({size-1}, {size-1})\n")
     print("=" * 35)
     print("=" * 35)
 
     computer_board = Game(size, ship_num, "Computer", type="computer")
     player_board = Game(size, ship_num, player_name, type="player")
 
-    print(f"Number of ships is {ship_num},
-          please now select {ship_num} coordinates.")
+    print(f"Number of ships is {ship_num}")
+    print(f"please now select {ship_num} coordinates.")
     print("=" * 35)
 
     for _ in range(ship_num):
