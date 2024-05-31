@@ -5,6 +5,8 @@ This is a terminal based battleships game.
 In this version users will try to beat the computer by sinking all of their ships before 
 their ships are sunk.
 
+A live link of the game can be found [here](https://battleships-p3-5cbef4e0df20.herokuapp.com/)
+
 ![Heroku Deployment Terminal Displayed on a variety of devices.](assets/images/battleships_device_mockup.png)
 
 ## Gameplay
